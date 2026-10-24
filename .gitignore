@@ -1,0 +1,15 @@
+# Build outputs
+/target
+/dist
+
+# Blobs dropped in the tree by "skopeo layers <image>"
+/layers-*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# OS junk
+Thumbs.db
+.DS_Store

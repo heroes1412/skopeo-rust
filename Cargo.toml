@@ -1,0 +1,53 @@
+[package]
+name = "skopeo"
+version = "1.24.1-rs"
+edition = "2021"
+rust-version = "1.82"
+description = "A Rust port of skopeo: work with container images and container image registries"
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/podman-container-tools/skopeo"
+keywords = ["containers", "oci", "docker", "registry", "skopeo"]
+categories = ["command-line-utilities"]
+
+[[bin]]
+name = "skopeo"
+path = "src/main.rs"
+
+[lib]
+name = "skopeo"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = { version = "1", default-features = false }
+base64 = { version = "0.22", default-features = false, features = ["std"] }
+clap = { version = "4", default-features = false, features = ["std", "help", "usage", "error-context", "suggestions", "wrap_help", "string"] }
+clap_complete = "4"
+flate2 = { version = "1", default-features = false, features = ["rust_backend"] }
+hex = { version = "0.4", default-features = false, features = ["std"] }
+regex-lite = "0.1"
+rpassword = "7"
+semver = { version = "1", default-features = false, features = ["std"] }
+serde = { version = "1", default-features = false, features = ["derive", "std"] }
+serde_json = { version = "1", default-features = false, features = ["std", "preserve_order"] }
+serde_yaml = "0.9"
+sha2 = "0.10"
+tar = { version = "0.4", default-features = false }
+tempfile = "3"
+ureq = { version = "3", default-features = false, features = ["rustls", "gzip"] }
+zstd = { version = "0.13", optional = true }
+
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "3"
+
+[features]
+default = []
+zstd = ["dep:zstd"]
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true

@@ -1,0 +1,25 @@
+# Cross-compilation settings for skopeo.
+#
+# The release profile in Cargo.toml (opt-level "z", fat LTO, abort on panic,
+# stripped symbols) is what keeps the binary small; nothing target-specific is
+# required for size. These settings only make static musl builds fully static
+# and pick convenient linkers when toolchains are installed.
+
+[target.x86_64-unknown-linux-musl]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[target.aarch64-unknown-linux-musl]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[target.armv7-unknown-linux-musleabihf]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[target.riscv64gc-unknown-linux-musl]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+# Optional: use zig as the linker for every GNU/musl target when installed.
+# `cargo zigbuild` handles this automatically, so nothing is forced here.
+
+[alias]
+# shorthands used by build.sh / CI
+xb = "zigbuild"
